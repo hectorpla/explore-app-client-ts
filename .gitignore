@@ -1,0 +1,9 @@
+node_modules/**/*
+.expo/**/*
+
+.jest/
+
+package-lock.json
+
+# temporary assets
+assets/
