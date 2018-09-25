@@ -1,0 +1,12 @@
+query Summary($term: String!) {
+  areaSummary(term: $term) {
+    term
+    place_of_interest_summaries {
+      category
+      total
+      tops {
+        name
+      }
+    }
+  }
+}

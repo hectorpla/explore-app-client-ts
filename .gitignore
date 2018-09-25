@@ -7,3 +7,9 @@ package-lock.json
 
 # temporary assets
 assets/
+
+# graphql schema
+**/**/*schema.json
+
+# generated types
+graphql/__generated__/

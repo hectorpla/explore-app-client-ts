@@ -1,0 +1,3 @@
+query Photos($term: String!) {
+  photos(term: $term)
+}

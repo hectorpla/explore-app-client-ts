@@ -1,11 +1,43 @@
 import * as React from "react";
-import { Platform, StatusBar, StyleSheet, View } from "react-native";
-import { AppLoading, Asset, Font } from "expo"; // remove Icon
+import {
+  Platform,
+  StatusBar,
+  StyleSheet,
+  View,
+  AppRegistry
+} from "react-native";
+import { AppLoading, Asset, Font } from "expo";
 import AppNavigator from "./navigation/AppNavigator";
+import { ApolloProvider } from "react-apollo";
+import ApolloClient from "apollo-boost";
+
+import gql from "graphql-tag";
+
+// setup guide
+const client = new ApolloClient({
+  uri: "http://localhost:3010/graphql"
+});
+// client
+//   .query({
+//     query: gql`
+//       query {
+//         topAreas
+//       }
+//     `
+//   })
+//   .then(result => console.log(result));
+
+const App = () => (
+  <ApolloProvider client={client}>
+    <Root />
+  </ApolloProvider>
+);
+export default App;
+
+AppRegistry.registerComponent("ExploreApp", () => App);
 
 // TODO type the props
-export default class App extends React.Component {
-  // <{ skipLoadingScreen?: any }>
+export class Root extends React.Component<{ skipLoadingScreen?: any }> {
   state = {
     isLoadingComplete: false
   };
@@ -46,8 +78,7 @@ export default class App extends React.Component {
     ]).then(() => {}); // ? edit: type it to compile
   };
 
-  _handleLoadingError = error => {
-    // : any
+  _handleLoadingError = (error: any) => {
     // In this case, you might want to report the error to your error
     // reporting service, for example Sentry
     console.warn(error);

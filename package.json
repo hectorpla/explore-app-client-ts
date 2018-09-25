@@ -7,7 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "test": "node ./node_modules/jest/bin/jest.js --watchAll"
+    "test": "node ./node_modules/jest/bin/jest.js --watchAll",
+    "schema:download": "apollo schema:download --endpoint=http://localhost:3010/graphql ./graphql/schema.json"
   },
   "jest": {
     "preset": "react-native",
@@ -29,14 +30,22 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
+    "@expo/vector-icons": "^6.3.1",
+    "apollo-boost": "^0.1.16",
+    "apollo-cache-inmemory": "^1.2.10",
+    "apollo-client": "^2.4.2",
     "expo": "^30.0.1",
+    "graphql": "^14.0.2",
+    "graphql-tag": "^2.9.2",
     "react": "16.3.1",
+    "react-apollo": "^2.1.11",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
     "react-navigation": "^2.16.0",
     "ts-jest": "^23.10.1"
   },
   "devDependencies": {
     "@types/expo": "^27.0.9",
+    "@types/expo__vector-icons": "^6.2.3",
     "@types/jest": "^23.3.2",
     "@types/react": "^16.4.14",
     "@types/react-native": "^0.56.23",

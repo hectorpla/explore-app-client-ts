@@ -1,0 +1,1 @@
+apollo codegen:generate --queries=*.gql  --schema=schema.json --target=typescript

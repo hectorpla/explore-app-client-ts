@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "explore-app": {
+      "schemaPath": "graphql/schema.json",
+      "extensions": {
+        "endpoints": {
+          "dev": "http://localhost:3010/graphql"
+        }
+      }
+    }
+  }
+}
