@@ -1,3 +1,7 @@
 query Photos($term: String!) {
-  photos(term: $term)
+  photos(term: $term) {
+    url
+    place_name
+    place_id
+  }
 }

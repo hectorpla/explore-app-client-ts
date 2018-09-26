@@ -8,5 +8,10 @@ query Summary($term: String!) {
         name
       }
     }
+    photos {
+      url
+      place_name
+      place_id
+    }
   }
 }

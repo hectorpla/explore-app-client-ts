@@ -10,27 +10,26 @@ import { AppLoading, Asset, Font } from "expo";
 import AppNavigator from "./navigation/AppNavigator";
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-boost";
+import { createStore } from "redux";
+import { StoreState } from "./types";
+import { reducer } from "./reducers";
+import { AppAction } from "./actions";
+import { Provider } from "react-redux";
 
-import gql from "graphql-tag";
+const store = createStore<StoreState, AppAction, {}, {}>(reducer);
 
 // setup guide
 const client = new ApolloClient({
   uri: "http://localhost:3010/graphql"
 });
-// client
-//   .query({
-//     query: gql`
-//       query {
-//         topAreas
-//       }
-//     `
-//   })
-//   .then(result => console.log(result));
 
+// official setup: https://s3.amazonaws.com/apollo-docs-1.x/redux.html
 const App = () => (
-  <ApolloProvider client={client}>
-    <Root />
-  </ApolloProvider>
+  <Provider store={store}>
+    <ApolloProvider client={client}>
+      <Root />
+    </ApolloProvider>
+  </Provider>
 );
 export default App;
 
