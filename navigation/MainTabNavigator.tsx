@@ -1,14 +1,11 @@
 import React from "react";
-import { Platform } from "react-native";
+import { Platform, View, Text } from "react-native";
 import {
   createStackNavigator,
   createBottomTabNavigator
 } from "react-navigation";
 
 import TabBarIcon from "../components/TabBarIcon";
-// import HomeScreen from "../screens/HomeScreen";
-import LinksScreen from "../screens/LinksScreen";
-import SettingsScreen from "../screens/SettingsScreen";
 import Explore from "../screens/Explore";
 
 type Focusable = {
@@ -34,7 +31,11 @@ HomeStack.navigationOptions = {
 };
 
 const LinksStack = createStackNavigator({
-  Links: LinksScreen
+  Links: () => (
+    <View>
+      <Text>awaiting features</Text>
+    </View>
+  )
 });
 
 LinksStack.navigationOptions = {
@@ -51,26 +52,7 @@ LinksStack.navigationOptions = {
   )
 };
 
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen
-});
-
-SettingsStack.navigationOptions = {
-  tabBarLabel: "Settings",
-  tabBarIcon: ({ focused }: Focusable) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === "ios"
-          ? `ios-options${focused ? "" : "-outline"}`
-          : "md-options"
-      }
-    />
-  )
-};
-
 export default createBottomTabNavigator({
   HomeStack,
-  LinksStack,
-  SettingsStack
+  LinksStack
 });

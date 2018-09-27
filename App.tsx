@@ -17,10 +17,10 @@ import { AppAction } from "./actions";
 import { Provider } from "react-redux";
 
 const store = createStore<StoreState, AppAction, {}, {}>(reducer);
-
+store;
 // setup guide
 const client = new ApolloClient({
-  uri: "http://localhost:3010/graphql"
+  uri: "http://10.0.0.248:3010/graphql"
 });
 
 // official setup: https://s3.amazonaws.com/apollo-docs-1.x/redux.html

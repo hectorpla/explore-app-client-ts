@@ -14,6 +14,8 @@ import gql from "graphql-tag";
 import { TopAreas } from "../graphql/__generated__/TopAreas";
 import AreaTag from "../containers/AreaTag";
 
+import { identicalKeyExtractor } from "./utils";
+
 const TOP_AREA_QUERY = gql`
   query TopAreas {
     topAreas
@@ -32,7 +34,7 @@ const render = ({ loading, data, error }: QueryResult<TopAreas>) => {
     return <Text> Loading... </Text>;
   }
   if (error) {
-    return <Text> ERROR </Text>;
+    return <Text> {error.message} </Text>;
   }
 
   return (
@@ -41,7 +43,7 @@ const render = ({ loading, data, error }: QueryResult<TopAreas>) => {
         <FlatList
           data={data.topAreas}
           renderItem={renderArea}
-          keyExtractor={x => x}
+          keyExtractor={identicalKeyExtractor}
           horizontal
         />
       ) : (
