@@ -1,0 +1,20 @@
+query Yelp_Business($alias: String!) {
+  business(id: $alias) {
+    name
+    rating
+    alias
+    location {
+      postal_code
+    }
+    coordinates {
+      latitude
+      longitude
+    }
+    photos
+
+    review_count
+    reviews {
+      text
+    }
+  }
+}

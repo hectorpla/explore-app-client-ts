@@ -1,3 +1,3 @@
 export interface StoreState {
-  activeArea: string;
+  activeArea?: string;
 }

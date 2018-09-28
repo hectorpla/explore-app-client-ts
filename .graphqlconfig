@@ -4,7 +4,11 @@
       "schemaPath": "graphql/schema.json",
       "extensions": {
         "endpoints": {
-          "dev": "http://localhost:3010/graphql"
+          "dev": "http://localhost:3010/graphql",
+          "yelp": {
+            "url": "https://api.yelp.com/v3/graphql",
+            "headers": "Bearer ${env:YELP_API_KEY}" 
+          }
         }
       }
     }

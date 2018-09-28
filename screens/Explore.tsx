@@ -3,12 +3,23 @@ import { View } from "react-native";
 
 import { AreaList } from "../components/AreaList";
 import PictureWall from "../containers/PictureWall";
+import PlaceDetails from "../components/PlaceDetails";
+import { StoreState } from "../types";
+import { connect } from "react-redux";
 
-export const Explore = () => (
+interface Props {
+  activeArea?: string;
+}
+export const Explore = ({ activeArea }: Props) => (
   <View>
     <AreaList />
-    <PictureWall />
+    {activeArea && <PictureWall />}
+    <PlaceDetails alias={"tokyo"} /> {/* TODO: tempo for test */}
   </View>
 );
 
-export default Explore;
+function mapStateToProps(state: StoreState): Props {
+  return { activeArea: state.activeArea };
+}
+
+export default connect(mapStateToProps)(Explore);

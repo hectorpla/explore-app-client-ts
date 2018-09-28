@@ -12,4 +12,10 @@ assets/
 **/**/*schema.json
 
 # generated types
-graphql/__generated__/
+graphql/**/__generated__/
+
+# config files
+config/
+*.env
+
+.vscode/settings.json

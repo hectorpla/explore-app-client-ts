@@ -17,7 +17,9 @@ import {
   Summary_areaSummary_photos
 } from "../graphql/__generated__/Summary";
 import { ErrorSection } from "./ErrorSection";
+import * as Styles from "../constants/Styles";
 import PlaceEpitome from "./PlaceEpitome";
+import { LoadingMessage } from "./LoadingMessage";
 
 const renderItem = ({
   item,
@@ -35,7 +37,7 @@ const renderItem = ({
 
 const render = ({ loading, data, error }: QueryResult<Summary>) => {
   if (loading) {
-    return <Text> Loading... </Text>;
+    return <LoadingMessage />;
   }
   if (error) {
     return <ErrorSection message={error.message} />;
@@ -74,11 +76,11 @@ const PHOTO_QUERY = gql`
   }
 `;
 
-export interface Props extends SummaryVariables {
+export interface Props extends Partial<SummaryVariables> {
   // just as the query argument
 }
 export const PictureWall = ({ term }: Props) => (
-  <View style={styles.container}>
+  <View style={Styles.generalContainer}>
     <Query query={PHOTO_QUERY} variables={{ term }}>
       {render}
     </Query>
@@ -86,9 +88,7 @@ export const PictureWall = ({ term }: Props) => (
 );
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: "center"
-  } as ViewStyle
+  // nothing
 });
 
 export default PictureWall;
