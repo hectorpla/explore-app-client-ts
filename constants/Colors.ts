@@ -11,5 +11,6 @@ export default {
   warningText: "#666804",
   noticeBackground: tintColor,
   noticeText: "#fff",
-  areaTagBackground: "rgba(242, 140, 38, 0.9)"
+  areaTagBackground: "rgba(242, 140, 38, 0.9)",
+  reviewBackGround: "rgba(213, 213, 189, 0.5)"
 };

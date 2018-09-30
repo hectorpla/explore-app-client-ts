@@ -6,15 +6,18 @@ import PictureWall from "../containers/PictureWall";
 import PlaceDetails from "../components/PlaceDetails";
 import { StoreState } from "../types";
 import { connect } from "react-redux";
+import { Route } from "react-router-native";
+import { withRouter, RouteProps } from "react-router-dom";
+
+// TODO bad placement of codes, rearrange
 
 interface Props {
   activeArea?: string;
 }
-export const Explore = ({ activeArea }: Props) => (
+const ListingComponent = ({ activeArea }: Props) => (
   <View>
     <AreaList />
     {activeArea && <PictureWall />}
-    <PlaceDetails alias={"tokyo"} /> {/* TODO: tempo for test */}
   </View>
 );
 
@@ -22,4 +25,21 @@ function mapStateToProps(state: StoreState): Props {
   return { activeArea: state.activeArea };
 }
 
-export default connect(mapStateToProps)(Explore);
+const Listing = withRouter(connect(mapStateToProps)(ListingComponent));
+
+export const Explore = () => (
+  <View style={{ flex: 1 }}>
+    <Route exact path="/explore" component={Listing} />
+    <Route path="/explore/detail/:alias" component={PlaceDetails} />
+    {/* <PlaceDetails
+      match={{
+        params: { alias: "皇居東御苑-千代田区-2" },
+        isExact: false,
+        path: "random",
+        url: "random"
+      }}
+    /> */}
+  </View>
+);
+
+export default Explore;

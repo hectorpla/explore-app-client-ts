@@ -15,13 +15,17 @@ import {
 import { ErrorSection } from "./ErrorSection";
 import * as Styles from "../constants/Styles";
 import { LoadingMessage } from "./LoadingMessage";
-import { YELP_GRAPHQL_REQUEST_HEADER } from "../config/config";
+import { ReviewItem } from "./ReviewItem";
+import { DetailSectionTitle } from "./DetailSectionTitle";
+import { match } from "react-router";
 
 export interface TitleProps {
   title: string;
 }
 export const Title = ({ title }: TitleProps) => (
-  <Text style={{ fontSize: 16, textAlign: "center" }}>{title}</Text>
+  <Text style={{ fontSize: 16, textAlign: "center", marginVertical: 5 }}>
+    {title}
+  </Text>
 );
 
 export interface MapProps {
@@ -32,7 +36,8 @@ export const Map = ({ coords }: MapProps) => {
     return <Text> No coordinates </Text>;
   }
   return (
-    <View>
+    <View style={{ marginVertical: 10 }}>
+      <DetailSectionTitle title={"Map"} />
       <Text>
         coordinate: {coords.latitude}, {coords.longitude}
       </Text>
@@ -47,23 +52,29 @@ export const ReviewsSection = ({ reviews }: ReviewSectionProps) => {
   if (!reviews) {
     return <Text>No reviews available</Text>;
   }
+  const filtered = reviews.filter(review => !!review);
   return (
-    <View>
+    <View style={{ width: "90%", marginVertical: 5 }}>
+      <DetailSectionTitle title={"Review"} />
       <FlatList
-        data={reviews}
+        data={filtered as Yelp_Business_business_reviews[]}
         renderItem={({
-          item
-        }: ListRenderItemInfo<Yelp_Business_business_reviews | null>) => {
-          return item && <Text> {item.text} </Text>;
+          item,
+          index
+        }: ListRenderItemInfo<Yelp_Business_business_reviews>) => {
+          return <ReviewItem text={item.text} />;
         }}
+        keyExtractor={({ text }: Yelp_Business_business_reviews) =>
+          text!.slice(0, 5) + text!.slice(-5)
+        }
       />
     </View>
   );
 };
 
 const BISINESS_QUERY = gql`
-  query BUSINESS {
-    business(id: "皇居東御苑-千代田区-2") {
+  query BUSINESS($id: String!) {
+    business(id: $id) {
       name
       rating
       alias
@@ -86,44 +97,44 @@ const BISINESS_QUERY = gql`
   }
 `;
 
-// TODO make it a singleton stored in Redux
-// ! not working because of CORS
-// const client = new ApolloClient({
-//   uri: "https://api.yelp.com/v3/graphql",
-//   headers: YELP_GRAPHQL_REQUEST_HEADER
-// });
-
-export interface Props extends Yelp_BusinessVariables {}
-export const PlaceDetails = ({ alias }: Props) => (
-  <View style={Styles.generalContainer}>
-    <Query query={BISINESS_QUERY}>
-      {({ error, data, loading }: QueryResult<Yelp_Business>) => {
-        if (error) {
-          console.log(error.networkError);
+export interface Props {
+  match: match<Yelp_BusinessVariables>;
+}
+export const PlaceDetails = ({ match }: Props) => {
+  const { params } = match;
+  const { alias } = params;
+  console.log(`Details: ${alias}`);
+  return (
+    <View style={Styles.generalContainer}>
+      <Query query={BISINESS_QUERY} variables={{ id: alias }}>
+        {({ error, data, loading }: QueryResult<Yelp_Business>) => {
+          if (error) {
+            console.log(error.networkError);
+            return (
+              <ErrorSection
+                message={`coundn't find business(${alias}): ${error.message}`}
+              />
+            );
+          }
+          if (loading) {
+            return <LoadingMessage />;
+          }
+          if (!data || !data.business) {
+            return <ErrorSection message={"can't find businuess"} />;
+          }
+          const { name, coordinates, review_count, reviews } = data.business;
           return (
-            <ErrorSection
-              message={`coundn't find business(${alias}): ${error.message}`}
-            />
+            !!name && (
+              <View style={Styles.generalContainer}>
+                <Title title={name} />
+                <Map coords={coordinates} />
+                <ReviewsSection reviews={reviews} />
+              </View>
+            )
           );
-        }
-        if (loading) {
-          return <LoadingMessage />;
-        }
-        if (!data || !data.business) {
-          return <ErrorSection message={"can't find businuess"} />;
-        }
-        const { name, coordinates, review_count, reviews } = data.business;
-        return (
-          !!name && (
-            <View style={Styles.generalContainer}>
-              <Title title={name} />
-              <Map coords={coordinates} />
-              <ReviewsSection reviews={reviews} />
-            </View>
-          )
-        );
-      }}
-    </Query>
-  </View>
-);
+        }}
+      </Query>
+    </View>
+  );
+};
 export default PlaceDetails;

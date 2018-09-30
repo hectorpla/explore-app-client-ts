@@ -2,6 +2,8 @@
 
 - [] add tslint rules
 - [] introduce logger module
+- [] deprecate initial React Navigation components
+- [] fix details loading
 
 # Challenges
 
@@ -30,3 +32,40 @@ on hand: set up a server wrap the Fusion API completely with the same types (Bus
 [apollo-mul-clients]: https://medium.com/open-graphql/apollo-multiple-clients-with-react-b34b571210a5
 [yelp-cors]: https://github.com/Yelp/yelp-fusion/issues/64
 [yelp-react-graphql]: https://github.com/Yelp/yelp-fusion/issues/403
+
+# React router
+
+## tutorial
+
+Important concepts: Route, Link...
+
+### simulator can't run
+
+solution: https://github.com/ReactTraining/react-router/issues/5678#issuecomment-359273705
+
+## Integration
+
+There are many challenges with the existing packages used in the
+
+### conflit with React Navigation
+
+According to https://reacttraining.com/react-router/native/api/withRouter  
+`withRouter work with re-renders after location changes propagate out from the <Router> component.`
+Issue: React Navigation creates layers that doesn't subscribe to location changes.
+
+### with Redux
+
+almost the same reason with React Navigation (connect())
+
+## Using React native router as stack router
+
+Both `NativeRouter` and `MemoryRouter` does not take the history prop, <Router> should be used to maintain a history object of the app. Discussion: https://github.com/ReactTraining/react-router/issues/5229
+
+### react router's style
+
+Uri to identify views (components), while React Navigation
+seems to have a more implicit way.
+
+## bugs
+
+don't import Component from wrong libraries. `React-router`, `react-router-native` and `react-router-dom` all have `Link` and other components. Mind the generated code inserted by the IDE.

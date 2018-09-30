@@ -7,14 +7,30 @@ import {
   AppRegistry
 } from "react-native";
 import { AppLoading, Asset, Font } from "expo";
-import AppNavigator from "./navigation/AppNavigator";
+// import AppNavigator from "./navigation/AppNavigator";
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-boost";
 import { createStore } from "redux";
 import { StoreState } from "./types";
 import { reducer } from "./reducers";
 import { AppAction } from "./actions";
-import { Provider } from "react-redux";
+import { Provider as RedxuProvider } from "react-redux";
+import {
+  NativeRouter,
+  MemoryRouter,
+  withRouter,
+  Route,
+  Router
+} from "react-router-native";
+import {
+  UnregisterCallback,
+  Location,
+  Action,
+  createMemoryHistory
+} from "history";
+
+import PlaceDetails from "./components/PlaceDetails";
+import AppNav from "./components/AppNav";
 
 const store = createStore<StoreState, AppAction, {}, {}>(reducer);
 store;
@@ -24,21 +40,50 @@ const client = new ApolloClient({
 });
 
 // official setup: https://s3.amazonaws.com/apollo-docs-1.x/redux.html
-const App = () => (
-  <Provider store={store}>
-    <ApolloProvider client={client}>
-      <Root />
-    </ApolloProvider>
-  </Provider>
-);
+const App = () => {
+  const history = createMemoryHistory({
+    initialEntries: ["/explore"]
+  });
+  return (
+    <RedxuProvider store={store}>
+      <ApolloProvider client={client}>
+        <Router history={history}>
+          <AppContainer />
+        </Router>
+      </ApolloProvider>
+    </RedxuProvider>
+  );
+};
 export default App;
 
 AppRegistry.registerComponent("ExploreApp", () => App);
 
-// TODO type the props
-export class Root extends React.Component<{ skipLoadingScreen?: any }> {
+interface Props {
+  history?: History.History;
+  skipLoadingScreen?: boolean;
+}
+export class Root extends React.Component<Props> {
   state = {
     isLoadingComplete: false
+  };
+
+  unlisten?: UnregisterCallback;
+
+  componentWillMount = () => {
+    this.unlisten = this.props.history!.listen(
+      (location: Location, action: Action) =>
+        console.log(
+          `router change, location: ${JSON.stringify(
+            location
+          )}, action: ${action}` +
+            "\n" +
+            `history: ${JSON.stringify(this.props.history)}`
+        )
+    );
+  };
+
+  componentWillUnmount = () => {
+    this.unlisten!();
   };
 
   render() {
@@ -54,7 +99,8 @@ export class Root extends React.Component<{ skipLoadingScreen?: any }> {
       return (
         <View style={styles.container}>
           {Platform.OS === "ios" && <StatusBar barStyle="default" />}
-          <AppNavigator />
+          {/* <Route path="/detail/:alias" component={PlaceDetails} /> */}
+          <AppNav />
         </View>
       );
     }
@@ -62,10 +108,6 @@ export class Root extends React.Component<{ skipLoadingScreen?: any }> {
 
   _loadResourcesAsync = async () => {
     return Promise.all([
-      Asset.loadAsync([
-        require("./assets/images/robot-dev.png"),
-        require("./assets/images/robot-prod.png")
-      ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar
         // ? edit: remove Icon
@@ -87,6 +129,10 @@ export class Root extends React.Component<{ skipLoadingScreen?: any }> {
     this.setState({ isLoadingComplete: true });
   };
 }
+
+// ! should wrap with withRouter
+// TODO make it compile
+const AppContainer = withRouter(Root);
 
 const styles = StyleSheet.create({
   container: {
