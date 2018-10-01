@@ -2,10 +2,14 @@
 
 - [] add tslint rules
 - [] introduce logger module
-- [] deprecate initial React Navigation components
-- [] fix details loading
-- [] layout for link (originally done by react navigation)
+- [x] deprecate initial React Navigation components
+- [] fix details loading (PlaceDetails Component)
+- [x] layout for link (originally done by react navigation)
 - [] route config
+- [] integrate google map
+- [x] back button (should redux maintain the history of routes? currently by manipulating history in a RouteComponentProps)
+- [x] integrate Link with TouchableOpacity (under the Link, add TouchableOpacity, which seems to prevent the press event from bubbling. Link doesn't change route) [solved by changing the component of link]
+- [] address the cases clicking the same route, pushing to history stack (replace instead of push)
 
 # Challenges
 

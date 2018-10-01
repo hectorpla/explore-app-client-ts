@@ -1,3 +1,5 @@
+// TODO remove this file
+
 import React from "react";
 import { Platform, View, Text } from "react-native";
 import {

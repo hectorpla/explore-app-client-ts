@@ -1,5 +1,10 @@
 import React from "react";
-import { View, Text } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TouchableOpacityProps
+} from "react-native";
 import TabBarIcon from "./TabBarIcon";
 import { Link, matchPath } from "react-router-native";
 
@@ -19,7 +24,7 @@ export interface Props {
 const TabBarLinkView = ({ title, to, currentPathName, computeName }: Props) => {
   const focused = !!matchPath(to, { path: currentPathName });
   return (
-    <Link to={to}>
+    <Link to={to} replace component={TouchableOpacity}>
       <View style={{ alignItems: "center" }}>
         <TabBarIcon focused={focused} name={computeName(focused)} />
         <Text style={{ textAlign: "center" }}>{title}</Text>

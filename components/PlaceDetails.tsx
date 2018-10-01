@@ -17,7 +17,7 @@ import Styles from "../constants/Styles";
 import { LoadingMessage } from "./LoadingMessage";
 import { ReviewItem } from "./ReviewItem";
 import { DetailSectionTitle } from "./DetailSectionTitle";
-import { match } from "react-router";
+import { match, RouteComponentProps } from "react-router";
 import { BackButton } from "react-router-native";
 
 export interface TitleProps {
@@ -98,10 +98,10 @@ const BISINESS_QUERY = gql`
   }
 `;
 
-export interface Props {
+export interface Props extends RouteComponentProps {
   match: match<Yelp_BusinessVariables>;
 }
-export const PlaceDetails = ({ match }: Props) => {
+export const PlaceDetails = ({ match, history }: Props) => {
   const { params } = match;
   const { alias } = params;
   console.log(`Details: ${alias}`);
@@ -110,7 +110,14 @@ export const PlaceDetails = ({ match }: Props) => {
     <View style={Styles.generalContainer}>
       <View style={{ alignSelf: "flex-end" }}>
         <BackButton>
-          <Button title="Back" onPress={() => console.log("route: back")} />
+          <Button
+            title="Back"
+            onPress={() => {
+              // good practice to have side effect here (without notifying redux)
+              console.log("route: back");
+              history.goBack();
+            }}
+          />
         </BackButton>
       </View>
       <Query query={BISINESS_QUERY} variables={{ id: alias }}>

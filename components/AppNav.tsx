@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, Platform } from "react-native";
 
-import { generalContainer } from "../constants/Styles";
 import Explore from "../screens/Explore";
 import {
   Link,
@@ -12,7 +11,7 @@ import {
   match,
   RouteComponentProps
 } from "react-router-native";
-import TabBarLinkView from "./TabBarItem";
+import TabBarLinkView from "./TabBarLinkView";
 
 // static screen without props
 export interface Screen {
@@ -40,6 +39,7 @@ const AppNav = ({ location }: Props) => {
     <View
       style={{
         marginTop: 50,
+        marginBottom: 10,
         flex: 1,
         justifyContent: "space-between"
       }}
@@ -66,18 +66,16 @@ const AppNav = ({ location }: Props) => {
               : "md-information-circle"
           }
         />
-        <Link to="/walk">
-          <TabBarLinkView
-            title="Walk"
-            to="/walk"
-            currentPathName={location.pathname}
-            computeName={focused =>
-              Platform.OS === "ios"
-                ? `ios-link${focused ? "" : "-outline"}`
-                : "md-link"
-            }
-          />
-        </Link>
+        <TabBarLinkView
+          title="Walk"
+          to="/walk"
+          currentPathName={location.pathname}
+          computeName={focused =>
+            Platform.OS === "ios"
+              ? `ios-link${focused ? "" : "-outline"}`
+              : "md-link"
+          }
+        />
       </View>
     </View>
   );
