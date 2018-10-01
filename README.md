@@ -4,6 +4,8 @@
 - [] introduce logger module
 - [] deprecate initial React Navigation components
 - [] fix details loading
+- [] layout for link (originally done by react navigation)
+- [] route config
 
 # Challenges
 
@@ -33,6 +35,15 @@ on hand: set up a server wrap the Fusion API completely with the same types (Bus
 [yelp-cors]: https://github.com/Yelp/yelp-fusion/issues/64
 [yelp-react-graphql]: https://github.com/Yelp/yelp-fusion/issues/403
 
+# Style debugging
+
+When dealing with Flex model, sometimes, wierd behaviors happen: an item disappears if some .
+Spot error for layers that don't have style, like <Query>.
+
+## draw the tree!
+
+Draw the Render tree from the suspected root, annotate each node with its style.
+
 # React router
 
 ## tutorial
@@ -56,6 +67,32 @@ Issue: React Navigation creates layers that doesn't subscribe to location change
 ### with Redux
 
 almost the same reason with React Navigation (connect())
+
+### conclusion
+
+withRouter (use Route) and Route create
+a Consumer to subscribe to location change (github:[https://github.com/ReactTraining/react-router/blob/master/packages/react-router/modules/Route.js])
+
+```javascript
+class Route extends React.Component {
+  // ...
+
+  render() {
+    return (
+      <RouterContext.Consumer>
+        {context => {
+          // ...
+          return (
+            <RouterContext.Provider value={props}>
+              // ...
+            </RouterContext.Provider>
+          );
+        }}
+      </RouterContext.Consumer>
+    );
+  }
+}
+```
 
 ## Using React native router as stack router
 

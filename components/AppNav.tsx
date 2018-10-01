@@ -2,10 +2,17 @@ import React from "react";
 import { View, Text, Platform } from "react-native";
 
 import { generalContainer } from "../constants/Styles";
-import { withRouter } from "react-router-dom";
 import Explore from "../screens/Explore";
-import { Link, Route } from "react-router-native";
-import TabBarIcon from "./TabBarIcon";
+import {
+  Link,
+  Route,
+  matchPath,
+  RouteProps,
+  withRouter,
+  match,
+  RouteComponentProps
+} from "react-router-native";
+import TabBarLinkView from "./TabBarItem";
 
 // static screen without props
 export interface Screen {
@@ -14,56 +21,59 @@ export interface Screen {
   tabIcon: JSX.Element;
 }
 
-interface Props {
-  screens: Screen[];
+// this Component is under a route
+interface Props extends RouteComponentProps {
+  screens?: { [screenName: string]: Screen };
+  match: match;
 }
 
 const Walk = () => {
   console.log("Walk");
-  return <Text> Awaiting Features </Text>;
+  return <Text style={{ flex: 1 }}> Awaiting Features </Text>;
 };
 
 // temporary hard code the Routes, TODO: generalize it later
-export const AppNav = () => {
+const AppNav = ({ location }: Props) => {
+  // console.log(location);
+  // TODO active review change for tab icons
   return (
     <View
       style={{
-        // ...generalContainer,
-        // justifyContent: "flex-end",
-        flex: 1
+        marginTop: 50,
+        flex: 1,
+        justifyContent: "space-between"
       }}
     >
-      {/* TODO: style for each route to strech */}
-      <View style={{ height: 50 }} />
-
-      <Route path="/explore" component={Explore} />
-      <Route exact path="/walk" component={Walk} />
+      <View style={{ flex: 1 }}>
+        <Route path="/explore" component={Explore} />
+        <Route exact path="/walk" component={Walk} />
+      </View>
 
       <View
         style={{
           flexDirection: "row",
-          justifyContent: "space-evenly"
+          justifyContent: "space-evenly",
+          flex: 0
         }}
       >
-        <Link to="/explore">
-          <View>
-            <TabBarIcon
-              focused={false}
-              name={
-                Platform.OS === "ios"
-                  ? `ios-information-circle${false ? "" : "-outline"}`
-                  : "md-information-circle"
-              }
-            />
-            <Text>Explore</Text>
-          </View>
-        </Link>
+        <TabBarLinkView
+          title="Explore"
+          to="/explore"
+          currentPathName={location.pathname}
+          computeName={focused =>
+            Platform.OS === "ios"
+              ? `ios-information-circle${focused ? "" : "-outline"}`
+              : "md-information-circle"
+          }
+        />
         <Link to="/walk">
-          <TabBarIcon
-            focused={false}
-            name={
+          <TabBarLinkView
+            title="Walk"
+            to="/walk"
+            currentPathName={location.pathname}
+            computeName={focused =>
               Platform.OS === "ios"
-                ? `ios-link${false ? "" : "-outline"}`
+                ? `ios-link${focused ? "" : "-outline"}`
                 : "md-link"
             }
           />
@@ -73,4 +83,5 @@ export const AppNav = () => {
   );
 };
 
+// ! augment the Component props with match
 export default withRouter(AppNav);

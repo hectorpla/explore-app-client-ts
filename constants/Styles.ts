@@ -1,5 +1,11 @@
-import { ViewStyle } from "react-native";
+import { ViewStyle, StyleSheet } from "react-native";
 
-export const generalContainer = {
-  alignItems: "center"
-} as ViewStyle;
+export default StyleSheet.create({
+  generalContainer: {
+    flexDirection: "column",
+    alignItems: "center"
+  } as ViewStyle,
+  mainViewContainer: {
+    flex: 1
+  } as ViewStyle
+});

@@ -1,6 +1,6 @@
 import React from "react";
 import { Query, QueryResult } from "react-apollo";
-import { View, Text, FlatList, ListRenderItemInfo } from "react-native";
+import { View, Text, FlatList, ListRenderItemInfo, Button } from "react-native";
 
 import gql from "graphql-tag";
 import ApolloClient from "apollo-boost";
@@ -13,11 +13,12 @@ import {
   Yelp_Business_business
 } from "../graphql/yelp/__generated__/Yelp_Business";
 import { ErrorSection } from "./ErrorSection";
-import * as Styles from "../constants/Styles";
+import Styles from "../constants/Styles";
 import { LoadingMessage } from "./LoadingMessage";
 import { ReviewItem } from "./ReviewItem";
 import { DetailSectionTitle } from "./DetailSectionTitle";
 import { match } from "react-router";
+import { BackButton } from "react-router-native";
 
 export interface TitleProps {
   title: string;
@@ -104,8 +105,14 @@ export const PlaceDetails = ({ match }: Props) => {
   const { params } = match;
   const { alias } = params;
   console.log(`Details: ${alias}`);
+  // TODO loading not working
   return (
     <View style={Styles.generalContainer}>
+      <View style={{ alignSelf: "flex-end" }}>
+        <BackButton>
+          <Button title="Back" onPress={() => console.log("route: back")} />
+        </BackButton>
+      </View>
       <Query query={BISINESS_QUERY} variables={{ id: alias }}>
         {({ error, data, loading }: QueryResult<Yelp_Business>) => {
           if (error) {
@@ -117,6 +124,7 @@ export const PlaceDetails = ({ match }: Props) => {
             );
           }
           if (loading) {
+            console.log("loading details");
             return <LoadingMessage />;
           }
           if (!data || !data.business) {

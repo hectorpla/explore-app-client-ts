@@ -3,7 +3,6 @@ import { Dispatch } from "redux";
 import AreaTag, { Props } from "../components/AreaTag";
 import { ChangeActiveArea, changeActiveArea } from "../actions";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 
 export function mapDispathToProps(
   dispatch: Dispatch<ChangeActiveArea>,

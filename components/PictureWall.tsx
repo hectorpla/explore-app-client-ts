@@ -17,7 +17,7 @@ import {
   Summary_areaSummary_photos
 } from "../graphql/__generated__/Summary";
 import { ErrorSection } from "./ErrorSection";
-import * as Styles from "../constants/Styles";
+import Styles from "../constants/Styles";
 import PlaceEpitome from "./PlaceEpitome";
 import { LoadingMessage } from "./LoadingMessage";
 
@@ -49,11 +49,7 @@ const render = ({ loading, data, error }: QueryResult<Summary>) => {
   const photos = data.areaSummary.photos;
   // TODO > last row of data is not shown properly
   return (
-    <View
-      style={{
-        alignItems: "center"
-      }}
-    >
+    <View>
       <FlatList
         data={photos}
         renderItem={renderItem}
@@ -80,7 +76,7 @@ export interface Props extends Partial<SummaryVariables> {
   // just as the query argument
 }
 export const PictureWall = ({ term }: Props) => (
-  <View style={Styles.generalContainer}>
+  <View style={{ flex: 1, marginBottom: 10 }}>
     <Query query={PHOTO_QUERY} variables={{ term }}>
       {render}
     </Query>

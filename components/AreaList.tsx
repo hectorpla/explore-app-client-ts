@@ -38,7 +38,7 @@ const render = ({ loading, data, error }: QueryResult<TopAreas>) => {
   }
 
   return (
-    <View style={styles.listContianer}>
+    <View>
       {data ? (
         <FlatList
           data={data.topAreas}
@@ -59,12 +59,16 @@ interface Style {
 
 const styles = StyleSheet.create<Style>({
   listContianer: {
-    // flex: 1,
+    flex: 0,
     marginVertical: 10
   }
 });
 
 // TODO learn more about the type of the Query component
-export const AreaList = () => <Query query={TOP_AREA_QUERY}>{render}</Query>;
+export const AreaList = () => (
+  <View style={styles.listContianer}>
+    <Query query={TOP_AREA_QUERY}>{render}</Query>
+  </View>
+);
 
 export default AreaList;

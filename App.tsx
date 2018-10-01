@@ -20,7 +20,8 @@ import {
   MemoryRouter,
   withRouter,
   Route,
-  Router
+  Router,
+  RouteComponentProps
 } from "react-router-native";
 import {
   UnregisterCallback,
@@ -58,8 +59,7 @@ export default App;
 
 AppRegistry.registerComponent("ExploreApp", () => App);
 
-interface Props {
-  history?: History.History;
+interface Props extends RouteComponentProps {
   skipLoadingScreen?: boolean;
 }
 export class Root extends React.Component<Props> {
@@ -70,7 +70,7 @@ export class Root extends React.Component<Props> {
   unlisten?: UnregisterCallback;
 
   componentWillMount = () => {
-    this.unlisten = this.props.history!.listen(
+    this.unlisten = this.props.history.listen(
       (location: Location, action: Action) =>
         console.log(
           `router change, location: ${JSON.stringify(
@@ -131,8 +131,7 @@ export class Root extends React.Component<Props> {
 }
 
 // ! should wrap with withRouter
-// TODO make it compile
-const AppContainer = withRouter(Root);
+const AppContainer = withRouter<Props>(Root);
 
 const styles = StyleSheet.create({
   container: {

@@ -7,7 +7,6 @@ import PlaceDetails from "../components/PlaceDetails";
 import { StoreState } from "../types";
 import { connect } from "react-redux";
 import { Route } from "react-router-native";
-import { withRouter, RouteProps } from "react-router-dom";
 
 // TODO bad placement of codes, rearrange
 
@@ -15,7 +14,7 @@ interface Props {
   activeArea?: string;
 }
 const ListingComponent = ({ activeArea }: Props) => (
-  <View>
+  <View style={{ flex: 1 }}>
     <AreaList />
     {activeArea && <PictureWall />}
   </View>
@@ -25,7 +24,7 @@ function mapStateToProps(state: StoreState): Props {
   return { activeArea: state.activeArea };
 }
 
-const Listing = withRouter(connect(mapStateToProps)(ListingComponent));
+const Listing = connect(mapStateToProps)(ListingComponent);
 
 export const Explore = () => (
   <View style={{ flex: 1 }}>
