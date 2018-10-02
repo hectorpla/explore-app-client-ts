@@ -11,7 +11,7 @@ import {
 import { graphql, Query, QueryResult } from "react-apollo";
 import gql from "graphql-tag";
 
-import { TopAreas } from "../graphql/__generated__/TopAreas";
+import { TopAreas } from "../../graphql/__generated__/TopAreas";
 import AreaTag from "../containers/AreaTag";
 
 import { identicalKeyExtractor } from "./utils";

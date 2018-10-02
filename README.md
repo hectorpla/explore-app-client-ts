@@ -2,14 +2,13 @@
 
 - [] add tslint rules
 - [] introduce logger module
-- [x] deprecate initial React Navigation components
 - [] fix details loading (PlaceDetails Component)
-- [x] layout for link (originally done by react navigation)
 - [] route config
-- [] integrate google map
+- [] integrate google maps
 - [x] back button (should redux maintain the history of routes? currently by manipulating history in a RouteComponentProps)
 - [x] integrate Link with TouchableOpacity (under the Link, add TouchableOpacity, which seems to prevent the press event from bubbling. Link doesn't change route) [solved by changing the component of link]
 - [] address the cases clicking the same route, pushing to history stack (replace instead of push)
+- [] let web app compile
 
 # Challenges
 
@@ -52,11 +51,8 @@ Draw the Render tree from the suspected root, annotate each node with its style.
 
 ## tutorial
 
-Important concepts: Route, Link...
-
-### simulator can't run
-
-solution: https://github.com/ReactTraining/react-router/issues/5678#issuecomment-359273705
+Important concepts: Route, Link...  
+Try the example on Expo Snack
 
 ## Integration
 
@@ -110,3 +106,22 @@ seems to have a more implicit way.
 ## bugs
 
 don't import Component from wrong libraries. `React-router`, `react-router-native` and `react-router-dom` all have `Link` and other components. Mind the generated code inserted by the IDE.
+
+# Web Support
+
+## challenges
+
+not sure what are supported in the browser
+
+cannot compile
+
+> Module not found: Can't resolve './effects/BlurView' in '/Users/hectorlueng/side-projects/explore-app-client-ts/node_modules/expo/src'
+
+ts-loader seems to load all ts file including node_modules, problems in config
+
+> /Users/hectorlueng/side-projects/explore-app-client-ts/node_modules/@types/expo/index.d.ts
+> (1442,52): Cannot find name 'WebGLRenderingContext'.
+
+### fixes to library checking
+
+see tsconfig.json ()

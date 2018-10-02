@@ -10,7 +10,8 @@
     "test": "node ./node_modules/jest/bin/jest.js --watchAll",
     "schema:download": "apollo schema:download --endpoint=http://localhost:3010/graphql ./graphql/schema.json",
     "schema:download-yelp": "apollo-codegen download-schema https://api.yelp.com/v3/graphql --output ./graphql/yelp-schema.json --header \"Authorization: Bearer $YELP_API_KEY\"",
-    "schema:gentypes": "cd graphql && source genTypes.sh & cd .. "
+    "schema:gentypes": "cd graphql && source genTypes.sh & cd .. ",
+    "web": "react-scripts-ts start"
   },
   "jest": {
     "preset": "react-native",
@@ -42,7 +43,10 @@
     "history": "^4.7.2",
     "react": "16.3.1",
     "react-apollo": "^2.1.11",
+    "react-art": "^16.5.2",
+    "react-dom": "^16.5.2",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
+    "react-native-web": "^0.9.1",
     "react-navigation": "^2.16.0",
     "react-redux": "^5.0.7",
     "react-router-native": "^4.3.0",
@@ -62,6 +66,13 @@
     "@types/redux": "^3.6.0",
     "jest-expo": "30.0.0",
     "react-native-typescript-transformer": "^1.2.10",
+    "react-scripts-ts": "^3.1.0",
     "typescript": "^3.0.3"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

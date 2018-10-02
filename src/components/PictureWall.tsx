@@ -15,7 +15,7 @@ import {
   Summary,
   SummaryVariables,
   Summary_areaSummary_photos
-} from "../graphql/__generated__/Summary";
+} from "../../graphql/__generated__/Summary";
 import { ErrorSection } from "./ErrorSection";
 import Styles from "../constants/Styles";
 import PlaceEpitome from "./PlaceEpitome";
@@ -47,7 +47,6 @@ const render = ({ loading, data, error }: QueryResult<Summary>) => {
     return <ErrorSection message={"Cannot find the area"} />;
   }
   const photos = data.areaSummary.photos;
-  // TODO > last row of data is not shown properly
   return (
     <View>
       <FlatList

@@ -4,10 +4,10 @@ import {
   StatusBar,
   StyleSheet,
   View,
-  AppRegistry
+  AppRegistry,
+  Text
 } from "react-native";
-import { AppLoading, Asset, Font } from "expo";
-// import AppNavigator from "./navigation/AppNavigator";
+import { AppLoading, Font } from "expo";
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-boost";
 import { createStore } from "redux";
@@ -30,7 +30,6 @@ import {
   createMemoryHistory
 } from "history";
 
-import PlaceDetails from "./components/PlaceDetails";
 import AppNav from "./components/AppNav";
 
 const store = createStore<StoreState, AppAction, {}, {}>(reducer);
@@ -114,7 +113,7 @@ export class Root extends React.Component<Props> {
         // ...Icon.Ionicons.font,
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
-        "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf")
+        "space-mono": require("../assets/fonts/SpaceMono-Regular.ttf")
       })
     ]).then(() => {}); // ? edit: type it to compile
   };

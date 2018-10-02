@@ -11,7 +11,7 @@ import {
   Yelp_Business_business_coordinates,
   Yelp_Business_business_reviews,
   Yelp_Business_business
-} from "../graphql/yelp/__generated__/Yelp_Business";
+} from "../../graphql/yelp/__generated__/Yelp_Business";
 import { ErrorSection } from "./ErrorSection";
 import Styles from "../constants/Styles";
 import { LoadingMessage } from "./LoadingMessage";
@@ -113,7 +113,7 @@ export const PlaceDetails = ({ match, history }: Props) => {
           <Button
             title="Back"
             onPress={() => {
-              // good practice to have side effect here (without notifying redux)
+              // ? good practice to have side effect here (without notifying redux)
               console.log("route: back");
               history.goBack();
             }}
