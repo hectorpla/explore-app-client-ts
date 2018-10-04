@@ -19,3 +19,4 @@ export const DetailSectionTitle = ({ title }: Props) => {
     </View>
   );
 };
+export default DetailSectionTitle;

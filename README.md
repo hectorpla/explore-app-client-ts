@@ -2,7 +2,6 @@
 
 - [] add tslint rules
 - [] introduce logger module
-- [] fix details loading (PlaceDetails Component)
 - [] route config
 - [] integrate google maps
 - [x] back button (should redux maintain the history of routes? currently by manipulating history in a RouteComponentProps)

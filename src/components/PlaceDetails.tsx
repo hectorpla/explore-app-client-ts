@@ -8,7 +8,6 @@ import ApolloClient from "apollo-boost";
 import {
   Yelp_BusinessVariables,
   Yelp_Business,
-  Yelp_Business_business_coordinates,
   Yelp_Business_business_reviews,
   Yelp_Business_business
 } from "../../graphql/yelp/__generated__/Yelp_Business";
@@ -19,6 +18,7 @@ import { ReviewItem } from "./ReviewItem";
 import { DetailSectionTitle } from "./DetailSectionTitle";
 import { match, RouteComponentProps } from "react-router";
 import { BackButton } from "react-router-native";
+import PlaceMap from "./PlaceMap";
 
 export interface TitleProps {
   title: string;
@@ -28,23 +28,6 @@ export const Title = ({ title }: TitleProps) => (
     {title}
   </Text>
 );
-
-export interface MapProps {
-  coords: Yelp_Business_business_coordinates | null;
-}
-export const Map = ({ coords }: MapProps) => {
-  if (!coords) {
-    return <Text> No coordinates </Text>;
-  }
-  return (
-    <View style={{ marginVertical: 10 }}>
-      <DetailSectionTitle title={"Map"} />
-      <Text>
-        coordinate: {coords.latitude}, {coords.longitude}
-      </Text>
-    </View>
-  );
-};
 
 export interface ReviewSectionProps {
   reviews: Yelp_Business_business["reviews"]; // ? weird syntax but Good enough
@@ -142,7 +125,7 @@ export const PlaceDetails = ({ match, history }: Props) => {
             !!name && (
               <View style={Styles.generalContainer}>
                 <Title title={name} />
-                <Map coords={coordinates} />
+                <PlaceMap coords={coordinates} />
                 <ReviewsSection reviews={reviews} />
               </View>
             )
