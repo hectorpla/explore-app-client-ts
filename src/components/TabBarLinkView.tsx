@@ -12,7 +12,8 @@ export interface Props {
   title: string;
   to: string;
   currentPathName: string;
-  computeName: (focused: boolean) => string;
+  // computeName: (focused: boolean) => string;
+  icon: (focused: boolean) => JSX.Element;
 }
 
 /**
@@ -21,12 +22,13 @@ export interface Props {
  * ! mind the conflict with name of the React Native component
  * @param props
  */
-const TabBarLinkView = ({ title, to, currentPathName, computeName }: Props) => {
+const TabBarLinkView = ({ title, to, currentPathName, icon }: Props) => {
   const focused = !!matchPath(to, { path: currentPathName });
   return (
     <Link to={to} replace component={TouchableOpacity}>
       <View style={{ alignItems: "center" }}>
-        <TabBarIcon focused={focused} name={computeName(focused)} />
+        {/* <TabBarIcon focused={focused} name={computeName(focused)} /> */}
+        {icon(focused)}
         <Text style={{ textAlign: "center" }}>{title}</Text>
       </View>
     </Link>

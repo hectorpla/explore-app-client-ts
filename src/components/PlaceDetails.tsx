@@ -92,16 +92,14 @@ export const PlaceDetails = ({ match, history }: Props) => {
   return (
     <View style={Styles.generalContainer}>
       <View style={{ alignSelf: "flex-end" }}>
-        <BackButton>
-          <Button
-            title="Back"
-            onPress={() => {
-              // ? good practice to have side effect here (without notifying redux)
-              console.log("route: back");
-              history.goBack();
-            }}
-          />
-        </BackButton>
+        <Button
+          title="Back"
+          onPress={() => {
+            // ? good practice to have side effect here (without notifying redux)
+            console.log("route: back");
+            history.goBack();
+          }}
+        />
       </View>
       <Query query={BISINESS_QUERY} variables={{ id: alias }}>
         {({ error, data, loading }: QueryResult<Yelp_Business>) => {
@@ -125,7 +123,7 @@ export const PlaceDetails = ({ match, history }: Props) => {
             !!name && (
               <View style={Styles.generalContainer}>
                 <Title title={name} />
-                <PlaceMap coords={coordinates} />
+                <PlaceMap title={name} coords={coordinates} />
                 <ReviewsSection reviews={reviews} />
               </View>
             )

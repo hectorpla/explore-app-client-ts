@@ -12,6 +12,7 @@ import {
   RouteComponentProps
 } from "react-router-native";
 import TabBarLinkView from "./TabBarLinkView";
+import TabBarIcon from "./TabBarIcon";
 
 // static screen without props
 export interface Screen {
@@ -60,21 +61,24 @@ const AppNav = ({ location }: Props) => {
           title="Explore"
           to="/explore"
           currentPathName={location.pathname}
-          computeName={focused =>
-            Platform.OS === "ios"
-              ? `ios-information-circle${focused ? "" : "-outline"}`
-              : "md-information-circle"
-          }
+          icon={focused => (
+            <TabBarIcon
+              type="FontAwesome"
+              focused={focused}
+              name="wpexplorer"
+            />
+          )}
         />
         <TabBarLinkView
           title="Walk"
           to="/walk"
           currentPathName={location.pathname}
-          computeName={focused =>
-            Platform.OS === "ios"
-              ? `ios-link${focused ? "" : "-outline"}`
-              : "md-link"
-          }
+          icon={focused => (
+            <TabBarIcon
+              focused={focused}
+              name={Platform.OS === "ios" ? `ios-walk` : "md-walk"}
+            />
+          )}
         />
       </View>
     </View>
