@@ -74,7 +74,7 @@ const PHOTO_QUERY = gql`
 export interface Props extends Partial<SummaryVariables> {
   // just as the query argument
 }
-export const PictureWall = ({ term }: Props) => (
+const PictureWall = ({ term }: Props) => (
   <View style={{ flex: 1, marginBottom: 10 }}>
     <Query query={PHOTO_QUERY} variables={{ term }}>
       {render}

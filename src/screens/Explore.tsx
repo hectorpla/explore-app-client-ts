@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 
-import { AreaList } from "../components/AreaList";
+import AreaList from "../components/AreaList";
 import PictureWall from "../containers/PictureWall";
 import PlaceDetails from "../components/PlaceDetails";
 import { StoreState } from "../types";
@@ -26,7 +26,7 @@ function mapStateToProps(state: StoreState): Props {
 
 const Listing = connect(mapStateToProps)(ListingComponent);
 
-export const Explore = () => (
+const Explore = () => (
   <View style={{ flex: 1 }}>
     <Route exact path="/explore" component={Listing} />
     <Route path="/explore/detail/:alias" component={PlaceDetails} />

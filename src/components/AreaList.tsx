@@ -65,7 +65,7 @@ const styles = StyleSheet.create<Style>({
 });
 
 // TODO learn more about the type of the Query component
-export const AreaList = () => (
+const AreaList = () => (
   <View style={styles.listContianer}>
     <Query query={TOP_AREA_QUERY}>{render}</Query>
   </View>

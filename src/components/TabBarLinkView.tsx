@@ -28,6 +28,11 @@ const TabBarLinkView = ({ title, to, currentPathName, icon }: Props) => {
     <Link to={to} replace component={TouchableOpacity}>
       <View style={{ alignItems: "center" }}>
         {/* <TabBarIcon focused={focused} name={computeName(focused)} /> */}
+
+        {/* TODO:  Don’t Use HOCs Inside the render Method
+          reference: https://reactjs.org/docs/higher-order-components.html#dont-use-hocs-inside-the-render-method
+          think about a work around
+        */}
         {icon(focused)}
         <Text style={{ textAlign: "center" }}>{title}</Text>
       </View>

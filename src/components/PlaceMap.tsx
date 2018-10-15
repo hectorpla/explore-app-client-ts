@@ -8,7 +8,7 @@ export interface MapProps {
   coords: Yelp_Business_business_coordinates | null;
   title?: string;
 }
-export const PlaceMap = ({ coords, title }: MapProps) => {
+const PlaceMap = ({ coords, title }: MapProps) => {
   if (!coords) {
     return <Text> No coordinates </Text>;
   }

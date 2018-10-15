@@ -8,7 +8,7 @@ interface Props {
   rating?: string;
   userUrl?: string;
 }
-export const ReviewItem = ({ text }: Props) => {
+const ReviewItem = ({ text }: Props) => {
   return (
     <Text
       style={{ backgroundColor: Color.reviewBackGround, marginVertical: 3 }}

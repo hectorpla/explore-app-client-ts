@@ -4,7 +4,7 @@ import { Text, View } from "react-native";
 interface Props {
   title: string;
 }
-export const DetailSectionTitle = ({ title }: Props) => {
+const DetailSectionTitle = ({ title }: Props) => {
   return (
     <View>
       <Text style={{ fontSize: 13, fontWeight: "bold", textAlign: "center" }}>

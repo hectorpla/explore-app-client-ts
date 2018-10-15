@@ -39,8 +39,21 @@ on hand: set up a server wrap the Fusion API completely with the same types (Bus
 
 # Style debugging
 
-When dealing with Flex model, sometimes, wierd behaviors happen: an item disappears if some .
+When dealing with Flex model, sometimes, wierd behaviors happen: an item disappears if some middle-leveled layers are missing flex definitions.
 Spot error for layers that don't have style, like <Query>.
+
+## Caveat for react-dev-tools
+
+The exporting way affects the dispalay
+
+The following exporting causes react-dev-tools not to detect the name of the Component (displayName turns out to be <Unknown>)
+
+> export MyComponent = (props: Props) => (...)
+> export default MyComponent
+
+removing the first export modifier helps, and it also helps if you set the `displayName` property of the render function (however, it make the ts compiler complains)
+
+> MyComponent.displayName = "MyComponentDebug";
 
 ## draw the tree!
 

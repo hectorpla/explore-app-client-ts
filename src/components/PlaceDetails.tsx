@@ -7,54 +7,24 @@ import ApolloClient from "apollo-boost";
 
 import {
   Yelp_BusinessVariables,
-  Yelp_Business,
-  Yelp_Business_business_reviews,
-  Yelp_Business_business
+  Yelp_Business
 } from "../../graphql/yelp/__generated__/Yelp_Business";
 import { ErrorSection } from "./ErrorSection";
 import Styles from "../constants/Styles";
 import { LoadingMessage } from "./LoadingMessage";
-import { ReviewItem } from "./ReviewItem";
-import { DetailSectionTitle } from "./DetailSectionTitle";
+
 import { match, RouteComponentProps } from "react-router";
-import { BackButton } from "react-router-native";
 import PlaceMap from "./PlaceMap";
+import ReviewsSection from "./ReviewsSection";
 
 export interface TitleProps {
   title: string;
 }
-export const Title = ({ title }: TitleProps) => (
+const PlaceTitle = ({ title }: TitleProps) => (
   <Text style={{ fontSize: 16, textAlign: "center", marginVertical: 5 }}>
     {title}
   </Text>
 );
-
-export interface ReviewSectionProps {
-  reviews: Yelp_Business_business["reviews"]; // ? weird syntax but Good enough
-}
-export const ReviewsSection = ({ reviews }: ReviewSectionProps) => {
-  if (!reviews) {
-    return <Text>No reviews available</Text>;
-  }
-  const filtered = reviews.filter(review => !!review);
-  return (
-    <View style={{ width: "90%", marginVertical: 5 }}>
-      <DetailSectionTitle title={"Review"} />
-      <FlatList
-        data={filtered as Yelp_Business_business_reviews[]}
-        renderItem={({
-          item,
-          index
-        }: ListRenderItemInfo<Yelp_Business_business_reviews>) => {
-          return <ReviewItem text={item.text} />;
-        }}
-        keyExtractor={({ text }: Yelp_Business_business_reviews) =>
-          text!.slice(0, 5) + text!.slice(-5)
-        }
-      />
-    </View>
-  );
-};
 
 const BISINESS_QUERY = gql`
   query BUSINESS($id: String!) {
@@ -84,7 +54,7 @@ const BISINESS_QUERY = gql`
 export interface Props extends RouteComponentProps {
   match: match<Yelp_BusinessVariables>;
 }
-export const PlaceDetails = ({ match, history }: Props) => {
+const PlaceDetails = ({ match, history }: Props) => {
   const { params } = match;
   const { alias } = params;
   console.log(`Details: ${alias}`);
@@ -122,7 +92,7 @@ export const PlaceDetails = ({ match, history }: Props) => {
           return (
             !!name && (
               <View style={Styles.generalContainer}>
-                <Title title={name} />
+                <PlaceTitle title={name} />
                 <PlaceMap title={name} coords={coordinates} />
                 <ReviewsSection reviews={reviews} />
               </View>
@@ -133,4 +103,5 @@ export const PlaceDetails = ({ match, history }: Props) => {
     </View>
   );
 };
+
 export default PlaceDetails;
